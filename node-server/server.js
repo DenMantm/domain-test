@@ -8,7 +8,11 @@ var app = express();
 
 //database connection
 
-// var mongoose = require('mongoose');
+//database connection
+
+var mongoose = require('mongoose');
+var configDB = 'mongodb://personal-blog-page:personal-blog-pageqwerty@ds145303.mlab.com:45303/personal-blog-page'
+mongoose.connect(configDB); // connect to our database
 
 
 require('./expressConfig')(app);

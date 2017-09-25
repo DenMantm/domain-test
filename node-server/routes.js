@@ -3,20 +3,31 @@ var auth = require('./auth'),
 
 var fs = require('fs');
 
-
+var subdomain;
 
 module.exports = function(app) {
-
+      app.get('*', function(req, res, next) {
+        
+    console.log('subdomains: '+req.subdomains);
+    if(req.subdomains.length<3){
+      subdomain = '/application-storage/'+req.subdomains[1];
+    }
+    else{
+      subdomain = '';
+    }
+    console.log(subdomain);
+    
+    next();
+  });
+  
   //Custom paths
     app.get('/landingPage', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '/../index.html'));
+    res.sendFile(path.resolve(__dirname + '/..'+subdomain+'/index.html'));
   });
 
     app.get('/home', function(req, res) {
-    res.sendFile(path.resolve(__dirname + '/../index.html'));
+    res.sendFile(path.resolve(__dirname + '/..'+subdomain+'/index.html'));
   });
-
-
 
 
   app.post('/api/login', auth.authenticate);
